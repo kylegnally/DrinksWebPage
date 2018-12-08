@@ -1,7 +1,23 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 <h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<hr/>
+<p>BeverageDB is a web application using ASP.NET MVC to manage a beverage database. Its main function is to list beverages in a remote
+    database and allow a logged-in user to perform functions on the beverages the database contains. These functions are:</p>
+<br/>
+<ul>
+    <li>
+        Create - create a new item. There are five required fields: id, name, pack size, price, and active status.
+    </li>
+    <li>
+        Edit - edit an existing item. Use this option to alter the above fields for the selected beverage.
+    </li>
+    <li>
+        Delete - Delete an existing item. This will permanently and irrevocably remove the item from the database.
+    </li>
+</ul>
+<br/>
+<p>In addition to these functions, a user may filter the displayed list by name, pack minimum price, and pack maximum price.</p>

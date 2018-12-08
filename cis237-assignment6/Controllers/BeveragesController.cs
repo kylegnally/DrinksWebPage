@@ -18,7 +18,65 @@ namespace cis237_assignment6.Controllers
         // GET: Beverages
         public ActionResult Index()
         {
-            return View(db.Beverages.ToList());
+            DbSet<Beverage> BeveragesToFilter = db.Beverages;
+
+            string filterName = "";
+            string filterPack = "";
+            string filterMin = "";
+            string filterMax = "";
+
+            decimal min = 0;
+            decimal max = 10000;
+
+            if (!String.IsNullOrWhiteSpace((string) Session["session_name"]))
+            {
+                filterName = (string)Session["session_name"];
+            }
+
+            if (!String.IsNullOrWhiteSpace((string)Session["session_pack"]))
+            {
+                filterPack = (string)Session["session_pack"];
+            }
+
+            if (!String.IsNullOrWhiteSpace((string)Session["session_min"]))
+            {
+                filterMin = (string)Session["session_min"];
+                min = decimal.Parse(filterMin);
+            }
+
+            if (!String.IsNullOrWhiteSpace((string)Session["session_max"]))
+            {
+                filterMax = (string)Session["session_max"];
+                max = Decimal.Parse(filterMax);
+            }
+
+            IEnumerable<Beverage> filtered = BeveragesToFilter.Where(
+                beverage => beverage.price >= min &&
+                            beverage.price <= max &&
+                            beverage.pack.Contains(filterPack) &&
+                            beverage.name.Contains(filterName)
+            );
+
+            ViewBag.filterName = filterName;
+            ViewBag.filterPack = filterPack;
+            ViewBag.filterMin = filterMin;
+            ViewBag.filterMax = filterMax;
+
+            return View(filtered.ToList());
+
+            //return View(db.Beverages.ToList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Filter()
+        {
+            string name = Request.Form.Get("name");
+            string pack = Request.Form.Get("pack");
+            string min = Request.Form.Get("min");
+            string max = Request.Form.Get("max");
+
+            return RedirectToAction("Index");
         }
 
         // GET: Beverages/Details/5
