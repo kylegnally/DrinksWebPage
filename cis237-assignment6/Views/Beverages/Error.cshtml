@@ -1,0 +1,12 @@
+﻿@model cis237_assignment6.Models.Beverage
+
+@{
+    ViewBag.Title = "Error";
+    ViewBag.Message = "Invalid entries have been detected.";
+}
+
+<h1>@ViewBag.Title</h1>
+<h2>@ViewBag.Message</h2>
+<p>One of the entries seems to have contained something that wasn't valid.</p>
+<br/>
+<p>Please @Html.ActionLink("Go back", "Index", "Beverages") and reenter the required information.</p>

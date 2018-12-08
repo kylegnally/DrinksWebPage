@@ -86,9 +86,9 @@
             @Html.DisplayFor(modelItem => item.active)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }, new { @class = "btn btn-default" }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }, new { @class = "btn btn-default" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id }, new { @class = "btn btn-default" })
         </td>
     </tr>
 }

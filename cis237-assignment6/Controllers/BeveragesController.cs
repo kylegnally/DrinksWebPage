@@ -40,14 +40,28 @@ namespace cis237_assignment6.Controllers
 
             if (!String.IsNullOrWhiteSpace((string)Session["session_min"]))
             {
-                filterMin = (string)Session["session_min"];
-                min = decimal.Parse(filterMin);
+                try
+                {
+                    filterMin = (string) Session["session_min"];
+                    min = decimal.Parse(filterMin);
+                }
+                catch
+                {
+                    return View("~/Views/Beverages/Error.cshtml");
+                }
             }
 
             if (!String.IsNullOrWhiteSpace((string)Session["session_max"]))
             {
-                filterMax = (string)Session["session_max"];
-                max = Decimal.Parse(filterMax);
+                try
+                {
+                    filterMax = (string)Session["session_max"];
+                    max = Decimal.Parse(filterMax);
+                }
+                catch
+                {
+                    return View("~/Views/Beverages/Error.cshtml");
+                } 
             }
 
             IEnumerable<Beverage> filtered = BeveragesToFilter.Where(
