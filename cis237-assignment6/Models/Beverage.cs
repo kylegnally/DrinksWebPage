@@ -11,7 +11,7 @@ namespace cis237_assignment6.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Beverage
     {
         public string id { get; set; }
