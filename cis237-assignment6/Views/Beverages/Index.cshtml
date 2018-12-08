@@ -6,6 +6,51 @@
 
 <h2>@ViewBag.Title</h2>
 
+<div class="form-group">
+    <fieldset>
+        <legend>Search Filter</legend>
+        @{
+            using (Html.BeginForm("Filter", "Beverages", FormMethod.Post, new { @class = "form-inline" }))
+            {
+                @*Render out the anti-forgery token*@
+                @Html.AntiForgeryToken()
+                <table class="table-responsive">
+                    <thead>
+                    <tr>
+                        <th>
+                            Filter Type
+                        </th>
+                        <th>
+                            Filter Value
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><label for="name">Beverage Name</label></td>
+                            <td>@Html.TextBox("name", (string)ViewBag.filtertName)</td>
+                        </tr>
+                        <tr>
+                            <td><label for="pack">Beverage Pack Size</label></td>
+                            <td>@Html.TextBox("pack", (string)ViewBag.filterrPack)</td>
+                        </tr>
+                        <tr>
+                            <td><label for="min">Minimum Price</label></td>
+                            <td>@Html.TextBox("min", (string)ViewBag.filterrMin)</td>
+                        </tr>
+                        <tr>
+                            <td><label for="max">Maximum price</label></td>
+                            <td>@Html.TextBox("max", (string)ViewBag.filtertMax)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                // TextBox(name, value)
+                <input type="submit" value="Filter" class="btn btn-info pull-left" />
+            }
+        }
+    </fieldset>
+</div>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>

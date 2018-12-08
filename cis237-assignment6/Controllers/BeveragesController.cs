@@ -76,6 +76,11 @@ namespace cis237_assignment6.Controllers
             string min = Request.Form.Get("min");
             string max = Request.Form.Get("max");
 
+            Session["session_name"] = name;
+            Session["session_pack"] = pack;
+            Session["session_min"] = min;
+            Session["session_max"] = max;
+
             return RedirectToAction("Index");
         }
 
