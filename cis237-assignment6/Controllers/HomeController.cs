@@ -26,5 +26,10 @@ namespace cis237_assignment6.Controllers
 
             return View();
         }
+
+        public ActionResult Test()
+        {
+            return Content("A Test Page.");
+        }
     }
 }
