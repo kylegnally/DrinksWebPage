@@ -41,7 +41,7 @@ namespace cis237_assignment6.Controllers
             if (!String.IsNullOrWhiteSpace((string)Session["session_min"]))
             {
                 filterMin = (string)Session["session_min"];
-                if (ValidatePrices(filterMin))
+                if (ValidateFields(filterMin))
                 {
                     min = decimal.Parse(filterMin);
                 }
@@ -55,7 +55,7 @@ namespace cis237_assignment6.Controllers
             if (!String.IsNullOrWhiteSpace((string)Session["session_max"]))
             {
                 filterMax = (string) Session["session_max"];
-                if (ValidatePrices(filterMax))
+                if (ValidateFields(filterMax))
                 {
                     max = Decimal.Parse(filterMax);
                 }
@@ -204,7 +204,7 @@ namespace cis237_assignment6.Controllers
             base.Dispose(disposing);
         }
 
-        public bool ValidatePrices(string priceToValidate)
+        public bool ValidateFields(string priceToValidate)
         {
             try
             {
@@ -215,6 +215,11 @@ namespace cis237_assignment6.Controllers
             {
                 return false;
             }
+        }
+
+        public bool ValidateFields(string name, string id, string pack, string price, string active)
+        {
+
         }
     }
 }
