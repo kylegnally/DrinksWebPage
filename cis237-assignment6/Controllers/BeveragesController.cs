@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using cis237_assignment6.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace cis237_assignment6.Controllers
 {
@@ -128,11 +129,18 @@ namespace cis237_assignment6.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,name,pack,price,active")] Beverage beverage)
         {
-            if (ModelState.IsValid)
+            if (ValidateFields(beverage.id, beverage.name, beverage.pack, beverage.price, beverage.active))
             {
-                db.Beverages.Add(beverage);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Beverages.Add(beverage);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return View("~/Views/Beverages/Error.cshtml");
             }
 
             return View(beverage);
@@ -217,9 +225,38 @@ namespace cis237_assignment6.Controllers
             }
         }
 
-        public bool ValidateFields(string name, string id, string pack, string price, string active)
+        public bool ValidateFields(string id, string name, string pack, decimal price, bool active)
         {
+            if (id.IsNullOrWhiteSpace() ||
+                name.IsNullOrWhiteSpace() ||
+                pack.IsNullOrWhiteSpace() ||
+                price.ToString() != null ||
+                active.ToString() != null)
+            {
+                return false;
+            }
 
+            return true;
+        }
+
+        public bool ValidateFields(string name, string pack, string price, string active)
+        {
+            if (name.IsNullOrWhiteSpace() ||
+                pack.IsNullOrWhiteSpace() ||
+                price.IsNullOrWhiteSpace() ||
+                active.IsNullOrWhiteSpace())
+                return false;
+
+            try
+            {
+                var decimalPrice = decimal.Parse(price);
+                var boolActive = bool.Parse(active);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
