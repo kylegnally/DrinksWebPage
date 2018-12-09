@@ -47,6 +47,7 @@ namespace cis237_assignment6.Controllers
                 }
                 catch
                 {
+                    Session["session_min"] = "";
                     return View("~/Views/Beverages/Error.cshtml");
                 }
             }
@@ -60,6 +61,7 @@ namespace cis237_assignment6.Controllers
                 }
                 catch
                 {
+                    Session["session_max"] = "";
                     return View("~/Views/Beverages/Error.cshtml");
                 } 
             }
