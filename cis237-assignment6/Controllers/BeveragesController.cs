@@ -40,12 +40,12 @@ namespace cis237_assignment6.Controllers
 
             if (!String.IsNullOrWhiteSpace((string)Session["session_min"]))
             {
-                try
+                filterMin = (string)Session["session_min"];
+                if (ValidatePrices(filterMin))
                 {
-                    filterMin = (string) Session["session_min"];
                     min = decimal.Parse(filterMin);
                 }
-                catch
+                else
                 {
                     Session["session_min"] = "";
                     return View("~/Views/Beverages/Error.cshtml");
@@ -54,12 +54,12 @@ namespace cis237_assignment6.Controllers
 
             if (!String.IsNullOrWhiteSpace((string)Session["session_max"]))
             {
-                try
+                filterMax = (string) Session["session_max"];
+                if (ValidatePrices(filterMax))
                 {
-                    filterMax = (string)Session["session_max"];
                     max = Decimal.Parse(filterMax);
                 }
-                catch
+                else
                 {
                     Session["session_max"] = "";
                     return View("~/Views/Beverages/Error.cshtml");
@@ -202,6 +202,19 @@ namespace cis237_assignment6.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public bool ValidatePrices(string priceToValidate)
+        {
+            try
+            {
+                decimal.Parse(priceToValidate);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
