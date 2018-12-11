@@ -11,24 +11,33 @@ using Microsoft.Ajax.Utilities;
 
 namespace cis237_assignment6.Controllers
 {
+    // the user must be authenticated
     [Authorize]
     public class BeveragesController : Controller
     {
+        // create a reference to the entities object
         private BeverageKNallyEntities db = new BeverageKNallyEntities();
 
         // GET: Beverages
         public ActionResult Index()
         {
+            // create a variable to hold the Beverages data 
             DbSet<Beverage> BeveragesToFilter = db.Beverages;
 
+            // these strings hold the data in the session.
+            // We will be seeing these defaults later when we attempt
+            // to create an error page during validation
             string filterName = "";
             string filterPack = "";
             string filterMin = "";
             string filterMax = "";
 
+            // default min and max values for the beverages.
+            // I think $10K is a reasonable max value
             decimal min = 0;
             decimal max = 10000;
 
+            // check for nulls and emptiness and assign any values found to the session variable
             if (!String.IsNullOrWhiteSpace((string) Session["session_name"]))
             {
                 filterName = (string)Session["session_name"];
@@ -42,10 +51,14 @@ namespace cis237_assignment6.Controllers
             if (!String.IsNullOrWhiteSpace((string)Session["session_min"]))
             {
                 filterMin = (string)Session["session_min"];
+
+                // if we can parse to a decimal, do so
                 if (ValidateFields(filterMin))
                 {
                     min = decimal.Parse(filterMin);
                 }
+
+                // if we can't, show the error page
                 else
                 {
                     Session["session_min"] = "";
@@ -55,11 +68,15 @@ namespace cis237_assignment6.Controllers
 
             if (!String.IsNullOrWhiteSpace((string)Session["session_max"]))
             {
+
+                // parse to decimal? great
                 filterMax = (string) Session["session_max"];
                 if (ValidateFields(filterMax))
                 {
                     max = Decimal.Parse(filterMax);
                 }
+
+                // can't? go to error
                 else
                 {
                     Session["session_max"] = "";
@@ -74,6 +91,7 @@ namespace cis237_assignment6.Controllers
                             beverage.name.Contains(filterName)
             );
 
+            // put the string into the bag so we can show it later
             ViewBag.filterName = filterName;
             ViewBag.filterPack = filterPack;
             ViewBag.filterMin = filterMin;
@@ -81,18 +99,20 @@ namespace cis237_assignment6.Controllers
 
             return View(filtered.ToList());
 
-            //return View(db.Beverages.ToList());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Filter()
         {
+            // Get the form data. The "name" part of Request.Form.Get("name") 
+            // refers to the name of the form control we're referring to
             string name = Request.Form.Get("name");
             string pack = Request.Form.Get("pack");
             string min = Request.Form.Get("min");
             string max = Request.Form.Get("max");
 
+            // now put the data back into the session so other methods can use it
             Session["session_name"] = name;
             Session["session_pack"] = pack;
             Session["session_min"] = min;
@@ -131,8 +151,9 @@ namespace cis237_assignment6.Controllers
         {
             if (ValidateFields(beverage.id, beverage.name, beverage.pack, beverage.price, beverage.active))
             {
+                // validate dupe id here
                 if (ModelState.IsValid)
-                {
+                {                   
                     db.Beverages.Add(beverage);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -230,8 +251,8 @@ namespace cis237_assignment6.Controllers
             if (id.IsNullOrWhiteSpace() ||
                 name.IsNullOrWhiteSpace() ||
                 pack.IsNullOrWhiteSpace() ||
-                price.ToString() != null ||
-                active.ToString() != null)
+                price.ToString() == null ||
+                active.ToString() == null)
             {
                 return false;
             }
