@@ -1,4 +1,18 @@
-﻿<!DOCTYPE html>
+﻿@*
+    /****************************************************************************************
+    *
+    * Kyle Nally
+    * CIS237 T/Th 3:30pm Assignment 6 - Beverage web application using ASP.NET MVC
+    * 12/11/2018
+    *
+    * This page is the shared layout page. Everything that will never change substantially 
+    * goes here.
+    *
+    *****************************************************************************************/
+*@
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -27,7 +41,7 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @*
-        Check for authentication
+                        Check for authentication - only display this if the user is logged in
                     *@
 
                     @if (Request.IsAuthenticated)

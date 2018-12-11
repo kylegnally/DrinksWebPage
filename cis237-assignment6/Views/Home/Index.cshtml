@@ -1,18 +1,39 @@
-﻿@{
+﻿@*
+    /****************************************************************************************
+    *
+    * Kyle Nally
+    * CIS237 T/Th 3:30pm Assignment 6 - Beverage web application using ASP.NET MVC
+    * 12/11/2018
+    *
+    * This ends up being index.html and is what the user sees when they visit the site
+    * and after they log in. It contains a test for authentication with appropriate
+    * messages depending on their authentication status.
+    *
+    *****************************************************************************************/
+*@
+
+@{
     ViewBag.Title = "BeverageDB";
 }
 
 <div class="jumbotron">
     <h1>Welcome to BeverageDB!</h1>
+    @*
+        If the user is logged in, show them a nice message inviting them to try out the DB
+    *@
     @if (Request.IsAuthenticated)
     {
         <p>It looks like you're logged in. Click the Beverages link on the navigation bar above to get started with BeverageDB!</p>
     }
+
+    @*
+        If the user is not logged in, remind them to register or log in
+    *@
     @if (!Request.IsAuthenticated)
     {
-    <p class="lead">Before attempting to use this site, please register if you haven't already done so.</p>
-    <p>If you're already registered you must log in before you can use the database.</p>
+        <p class="lead">Before attempting to use this site, please register if you haven't already done so.</p>
+        <p>If you're already registered you must log in before you can use the database.</p>
     }
-    
+
 </div>
 

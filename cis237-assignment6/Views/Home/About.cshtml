@@ -1,13 +1,28 @@
-﻿@{
+﻿@*
+    /****************************************************************************************
+    *
+    * Kyle Nally
+    * CIS237 T/Th 3:30pm Assignment 6 - Beverage web application using ASP.NET MVC
+    * 12/11/2018
+    *
+    * This is the About page for the web app. It contains some information about the app
+    * and about how to use the site.
+    *
+    *****************************************************************************************/
+*@
+
+@{
     ViewBag.Title = "About";
 }
 <h2>@ViewBag.Title</h2>
 <h3>@ViewBag.Message</h3>
 
-<hr/>
-<p>BeverageDB is a web application using ASP.NET MVC to manage a beverage database. Its main function is to list beverages in a remote
-    database and allow a logged-in user to perform functions on the beverages the database contains. These functions are:</p>
-<br/>
+<hr />
+<p>
+    BeverageDB is a web application using ASP.NET MVC to manage a beverage database. Its main function is to list beverages in a remote
+    database and allow a logged-in user to perform functions on the beverages the database contains. These functions are:
+</p>
+<br />
 <ul>
     <li>
         Create - create a new item. There are five required fields: id, name, pack size, price, and active status.
@@ -19,5 +34,5 @@
         Delete - Delete an existing item. This will permanently and irrevocably remove the item from the database.
     </li>
 </ul>
-<br/>
-<p>In addition to these functions, a user may filter the displayed list by name, pack minimum price, and pack maximum price.</p>
+<br />
+<p>In addition to these functions, a user may filter the displayed list by name, pack size, pack minimum price, and pack maximum price.</p>

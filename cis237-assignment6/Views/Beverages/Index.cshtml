@@ -1,4 +1,18 @@
-﻿@model IEnumerable<cis237_assignment6.Models.Beverage>
+﻿@*
+    /****************************************************************************************
+    *
+    * Kyle Nally
+    * CIS237 T/Th 3:30pm Assignment 6 - Beverage web application using ASP.NET MVC
+    * 12/11/2018
+    *
+    * This is the main Beverage DB index page. It lists all of the beverages and contains 
+    * the meat and potatoes of the web app.
+    *
+    *****************************************************************************************/
+*@
+
+
+@model IEnumerable<cis237_assignment6.Models.Beverage>
 
 @{
     ViewBag.Title = "Beverages";
@@ -16,14 +30,14 @@
                 @Html.AntiForgeryToken()
                 <table class="table-responsive">
                     <thead>
-                    <tr>
-                        <th>
-                            Filter Type
-                        </th>
-                        <th>
-                            Filter Value
-                        </th>
-                    </tr>
+                        <tr>
+                            <th>
+                                Filter Type
+                            </th>
+                            <th>
+                                Filter Value
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
                         <tr>
@@ -71,26 +85,27 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.pack)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.active)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }, new { @class = "btn btn-default" }) 
-            @Html.ActionLink("Details", "Details", new { id=item.id }, new { @class = "btn btn-default" }) 
-            @Html.ActionLink("Delete", "Delete", new { id=item.id }, new { @class = "btn btn-default" })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pack)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.active)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
 
 </table>

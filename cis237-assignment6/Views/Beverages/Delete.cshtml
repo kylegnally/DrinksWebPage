@@ -1,4 +1,17 @@
-﻿@model cis237_assignment6.Models.Beverage
+﻿@*
+    /****************************************************************************************
+    *
+    * Kyle Nally
+    * CIS237 T/Th 3:30pm Assignment 6 - Beverage web application using ASP.NET MVC
+    * 12/11/2018
+    *
+    * This is the Delete page for beverages in the database. The delete buttons are clearly 
+    * marked as dangerous.
+    *
+    *****************************************************************************************/
+*@
+
+@model cis237_assignment6.Models.Beverage
 
 @{
     ViewBag.Title = "Delete";
@@ -45,12 +58,15 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            <div class="btn btn-default">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
         </div>
     }
 </div>

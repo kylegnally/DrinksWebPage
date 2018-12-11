@@ -1,4 +1,17 @@
-﻿@model cis237_assignment6.Models.Beverage
+﻿@*
+    /****************************************************************************************
+    *
+    * Kyle Nally
+    * CIS237 T/Th 3:30pm Assignment 6 - Beverage web application using ASP.NET MVC
+    * 12/11/2018
+    *
+    * This is the Error page for the web app. If the user entered something invalid, they
+    * will see this page.
+    *
+    *****************************************************************************************/
+*@
+
+@model cis237_assignment6.Models.Beverage
 
 @{
     ViewBag.Title = "Error";
@@ -8,7 +21,7 @@
 <h1>@ViewBag.Title</h1>
 <h2>@ViewBag.Message</h2>
 <p>One of the entries seems to have contained something that wasn't valid.</p>
-<br/>
+<br />
 <p>
     Did you leave a field blank?
     <br />
