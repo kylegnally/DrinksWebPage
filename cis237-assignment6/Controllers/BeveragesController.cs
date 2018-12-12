@@ -1,4 +1,15 @@
-﻿using System;
+﻿/****************************************************************************************
+*
+* Kyle Nally
+* CIS237 T/Th 3:30pm Assignment 6 - Beverage web application using ASP.NET MVC
+* 12/11/2018
+*
+* This is the beverage controller. The logic for handling what happens with the beverages
+* (editing, deleting, adding, and filtering) occurs here.
+*
+*****************************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -149,14 +160,24 @@ namespace cis237_assignment6.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,name,pack,price,active")] Beverage beverage)
         {
+            // Run a validation method call on the entries
             if (ValidateFields(beverage.id, beverage.name, beverage.pack, beverage.price, beverage.active))
             {
-                // validate dupe id here
-                if (ModelState.IsValid)
-                {                   
-                    db.Beverages.Add(beverage);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                // try to add the beverage. If it fails (ex., a duplicate id...
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                        db.Beverages.Add(beverage);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                }
+
+                // ... send the user to the error page.
+                catch
+                {
+                    return View("~/Views/Beverages/Error.cshtml");
                 }
             }
             else
@@ -189,12 +210,31 @@ namespace cis237_assignment6.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,name,pack,price,active")] Beverage beverage)
         {
-            if (ModelState.IsValid)
+            // validate the fields. If it succeeds...
+            if (ValidateFields(beverage.name, beverage.pack, beverage.price, beverage.active))
             {
-                db.Entry(beverage).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                // try to save the changes...
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(beverage).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                }
+
+                // ... if it fails, burp
+                catch
+                {
+                    return View("~/Views/Beverages/Error.cshtml");
+                }
             }
+            else
+            {
+                return View("~/Views/Beverages/Error.cshtml");
+            }
+
             return View(beverage);
         }
 
@@ -233,6 +273,7 @@ namespace cis237_assignment6.Controllers
             base.Dispose(disposing);
         }
 
+        // validation overload method for prices in the filter
         public bool ValidateFields(string priceToValidate)
         {
             try
@@ -246,6 +287,7 @@ namespace cis237_assignment6.Controllers
             }
         }
 
+        // validation overload method for adding a new beverage
         public bool ValidateFields(string id, string name, string pack, decimal price, bool active)
         {
             if (id.IsNullOrWhiteSpace() ||
@@ -260,24 +302,18 @@ namespace cis237_assignment6.Controllers
             return true;
         }
 
-        public bool ValidateFields(string name, string pack, string price, string active)
+        // validation overload method for editing a beverage
+        public bool ValidateFields(string name, string pack, decimal price, bool active)
         {
             if (name.IsNullOrWhiteSpace() ||
                 pack.IsNullOrWhiteSpace() ||
-                price.IsNullOrWhiteSpace() ||
-                active.IsNullOrWhiteSpace())
+                price.ToString() == null ||
+                active.ToString() == null)
+            {
                 return false;
+            }
 
-            try
-            {
-                var decimalPrice = decimal.Parse(price);
-                var boolActive = bool.Parse(active);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            return true;
         }
     }
 }
